@@ -195,6 +195,19 @@ theta3 = (pi/2 - beta - atan2(abs(a3), d4)).subs(s)
 
 <img width="600" src="misc_images/IK2.png">
 
+theta4 and theta5 and theta6 are obtaind using the following equations (Euler-Angle Decomposition)
+
+```python
+# rotation matrix from joint 3 to joint 6,
+R0_3_inv = Transpose(R0_3.evalf(subs={q1: theta1, q2: theta2, q3: theta3}))
+R3_6 = (R0_3_inv * Rrpy).evalf()
+
+# Euler angle decomposition
+theta4 = atan2(R3_6[2,2], -R3_6[0,2])
+theta5 = atan2(sqrt(R3_6[1,0]**2 + R3_6[1,1]**2), R3_6[1,2])
+theta6 = atan2(-R3_6[1,1], R3_6[1,0])
+```
+
 ## Project Implementation
 
 ### 1. Fill in the `IK_server.py` file with properly commented python code for calculating Inverse Kinematics based on previously performed Kinematic Analysis. Your code must guide the robot to successfully complete 8/10 pick and place cycles. Briefly discuss the code you implemented and your results.
