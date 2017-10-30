@@ -217,3 +217,7 @@ theta6 = atan2(-R3_6[1,1], R3_6[1,0])
 Implementaiton is [here](https://github.com/msrks/RoboND-Kinematics-Project/blob/master/kuka_arm/scripts/IK_server.py)).
 
 the result is perfect success!
+
+![](misc_images/gazebo1.png)
+
+![](misc_images/gazebo2.png)
