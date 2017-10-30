@@ -163,17 +163,42 @@ Matrix([
 [0, 0, 0,     1]])
 ```
 
-#### homogeneous transform matrix from base_link to gripper_link using only the position and orientation of the gripper_link
-
-
-
-
 #### 3. Decouple Inverse Kinematics problem into Inverse Position Kinematics and inverse Orientation Kinematics; doing so derive the equations to calculate all individual joint angles.
 
 >Based on the geometric Inverse Kinematics method described here, breakdown the IK problem into Position and Orientation problems. Derive the equations for individual joint angles. Your writeup must contain details about the steps you took to arrive at those equations. Add figures where necessary. If any given joint has multiple solutions, select the best solution and provide explanation about your choice (Hint: Observe the active robot workspace in this project and the fact that some joints have physical limits).
+
+theta1 is easily obtained using the following equation.
+
+```python
+theta1 = atan2(wy, wx).evalf(subs=s)
+```
+
+<img width="600" src="misc_images/IK1.png">
+
+theta2 and theta3 are obtaind using the following equations (Triangle Laws)
+
+```python
+# triangle sides
+A = a2
+B = sqrt(a3**2 + d4**2)
+C = sqrt((sqrt(wx**2 + wy**2)-a1)**2 + (wz - d1)**2)
+
+# apply law of cosines
+cos_gamma = (A**2 + C**2 - B**2) / (2 * A * C)
+gamma = atan2(sqrt(1-cos_gamma**2), cos_gamma)
+cos_beta = (A**2 + B**2 - C**2) / (2 * A * B)
+beta = atan2(sqrt(1-cos_beta**2), cos_beta)
+
+theta2 = (pi/2 - gamma - atan2(wz-d1, sqrt(wx**2 + wy**2) - a1)).subs(s)
+theta3 = (pi/2 - beta - atan2(abs(a3), d4)).subs(s)
+```
+
+<img width="600" src="misc_images/IK2.png">
 
 ## Project Implementation
 
 ### 1. Fill in the `IK_server.py` file with properly commented python code for calculating Inverse Kinematics based on previously performed Kinematic Analysis. Your code must guide the robot to successfully complete 8/10 pick and place cycles. Briefly discuss the code you implemented and your results.
 
 >IK_server.py must contain properly commented code. The robot must track the planned trajectory and successfully complete pick and place operation. Your writeup must include explanation for the code and a discussion on the results.
+
+Implementaiton is [here](https://github.com/msrks/RoboND-Kinematics-Project/blob/master/kuka_arm/scripts/IK_server.py)).
