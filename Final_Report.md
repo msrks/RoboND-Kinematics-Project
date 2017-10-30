@@ -202,3 +202,5 @@ theta3 = (pi/2 - beta - atan2(abs(a3), d4)).subs(s)
 >IK_server.py must contain properly commented code. The robot must track the planned trajectory and successfully complete pick and place operation. Your writeup must include explanation for the code and a discussion on the results.
 
 Implementaiton is [here](https://github.com/msrks/RoboND-Kinematics-Project/blob/master/kuka_arm/scripts/IK_server.py)).
+
+the result is perfect success!
